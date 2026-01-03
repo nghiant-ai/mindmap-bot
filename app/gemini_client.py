@@ -56,10 +56,11 @@ MINDMAP_FUNCTION = types.FunctionDeclaration(
             "format": types.Schema(
                 type=types.Type.STRING,
                 description="""Định dạng xuất:
-                - 'markdown' (MẶC ĐỊNH): Markdown outline (.md) - dễ đọc, tương thích EdrawMind, Obsidian
+                - 'excel' (KHUYẾN NGHỊ): Excel spreadsheet (.xlsx) - DỄ SỬA NHẤT cho người dùng thông thường
+                - 'markdown': Markdown outline (.md) - tương thích EdrawMind, Obsidian
                 - 'json': JSON format - cho web viewers
                 """,
-                enum=["markdown", "json"]
+                enum=["excel", "markdown", "json"]
             )
         },
         required=["title", "structure"]

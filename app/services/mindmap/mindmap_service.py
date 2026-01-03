@@ -7,6 +7,7 @@ from io import BytesIO
 from app.core.logging import get_logger
 from app.services.mindmap.generators.json_generator import JSONMindMapGenerator
 from app.services.mindmap.generators.markdown_generator import MarkdownGenerator
+from app.services.mindmap.generators.excel_generator import ExcelGenerator
 from app.services.mindmap.models import MindMapNode
 
 logger = get_logger(__name__)
@@ -18,6 +19,7 @@ class MindMapService:
     def __init__(self):
         self.json_generator = JSONMindMapGenerator()
         self.markdown_generator = MarkdownGenerator()
+        self.excel_generator = ExcelGenerator()
 
     async def generate_from_structure(
         self,
@@ -32,7 +34,7 @@ class MindMapService:
             structure: Mind map structure (from Gemini AI)
                       Format: {"name": "Root", "children": [...], "note": "..."}
             title: Mind map title
-            format: Output format - "markdown" (default) or "json"
+            format: Output format - "markdown" (default), "json", or "excel"
 
         Returns:
             BytesIO buffer containing the mind map file
@@ -45,6 +47,8 @@ class MindMapService:
         # Generate output based on format
         if format == "markdown":
             return await self.markdown_generator.generate(root_node, title, None)
+        elif format == "excel":
+            return await self.excel_generator.generate(root_node, title, None)
         else:  # json
             return await self.json_generator.generate(root_node, title, None)
 

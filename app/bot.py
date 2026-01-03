@@ -25,7 +25,7 @@ Gửi tin nhắn: "Tạo mindmap về [chủ đề]"
 - Tạo sơ đồ tư duy về lập trình Python
 - Vẽ mindmap về marketing online
 
-📄 **Format:** Markdown (.md) - tương thích EdrawMind, Obsidian
+📄 **Format:** Excel (.xlsx), Markdown (.md), hoặc JSON
 
 Hãy thử ngay! 🚀
     """
@@ -44,7 +44,8 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 **Tạo mindmap:**
 Chỉ cần gửi tin nhắn yêu cầu tạo mindmap về chủ đề bạn muốn.
 
-Bot sẽ tự động tổ chức kiến thức thành cấu trúc phân cấp và tạo file .md cho bạn!
+Bot sẽ tự động tổ chức kiến thức thành cấu trúc phân cấp và tạo file cho bạn!
+AI sẽ tự động chọn format phù hợp (Excel dễ sửa nhất, Markdown cho EdrawMind).
     """
     await update.message.reply_text(help_text, parse_mode="Markdown")
 
@@ -71,8 +72,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 format=result["format"]
             )
 
-            # Determine file extension
-            file_ext = ".md" if result["format"] == "markdown" else ".json"
+            # Determine file extension based on format
+            format_extensions = {
+                "markdown": ".md",
+                "json": ".json",
+                "excel": ".xlsx"
+            }
+            file_ext = format_extensions.get(result["format"], ".md")
             filename = f"{result['title']}{file_ext}"
 
             # Send file
