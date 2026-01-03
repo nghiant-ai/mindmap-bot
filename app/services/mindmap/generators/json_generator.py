@@ -37,7 +37,7 @@ class JSONMindMapGenerator:
         mindmap_data = {
             "meta": {
                 "name": title,
-                "author": "Personal Chatbot",
+                "author": "Mindmap Bot",
                 "created": get_vietnam_time().isoformat(),
                 "version": "1.0"
             },
